@@ -32,6 +32,7 @@ yarn deploy
 ***
 ### Blog :
 
+https://note.com/knaka0209/n/na85a2bd1a877
 
 ***
 

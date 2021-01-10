@@ -7,8 +7,6 @@ export default async function (req, res){
     var collection = await LibMongo.get_collection("tasks" )
     var items = await collection.find({}).sort({created_at: -1}).toArray()
     var ret ={
-      message: "Hello, API!",
-      p1: "param222",
       items: items
     }
     res.json(ret);

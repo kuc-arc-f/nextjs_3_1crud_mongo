@@ -1,22 +1,21 @@
 import Head from 'next/head'
 import React from 'react'
 
-import Header from '../Layout/AppHead';
+import Layout from '../../components/layout'
 //
 function Page(data) {
 console.log(data.item )
   var item = data.item
 
   return (
-  <div>
-    <Header />
+  <Layout>
     <div className="container">
       <div><h1>{item.title}</h1>
       </div>
       <div>Content: {item.content}
       </div>      
     </div>
-  </div>
+  </Layout>
   )
 }
 //

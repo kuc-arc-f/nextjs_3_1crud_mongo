@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import Router from 'next/router'
 import React from 'react'
+import flash from 'next-flash';
+import cookies from 'next-cookies'
 
-//import LibTask from '../../../libs/LibTask';
-//import LibStore from '../../../libs/LibStore';
-import Header from '../../Layout/AppHead';
+import Layout from '../../../components/layout'
 //
 export default class extends React.Component {
   constructor(props){
@@ -15,23 +15,29 @@ export default class extends React.Component {
       title: this.props.item.title, 
       content: this.props.item.content,
     }
-console.log(this.state )
+//console.log(this.props )
   }
   static async getInitialProps(ctx) {
-    console.log(ctx.query.id)
+    console.log("id=", ctx.query.id)
     var id = ctx.query.id
-//    var item = {}
     const res = await fetch('/api/tasks/show?id=' + id)
     const json = await res.json()
   // console.log(json)
     var item = json.item    
 //console.log(item)
       return {
-          hoge: 'hoge',
           id: id,
           item: item,
+          user_id :cookies(ctx).user_id
       };
-  }  
+  }
+  componentDidMount(){
+//    console.log( "user_id=" ,this.props.user_id )
+    if(typeof this.props.user_id === 'undefined'){
+      flash.set({ messages_error: 'Error, Login require' })
+      Router.push('/login');
+    }
+  }     
   handleChangeTitle(e){
     console.log("handleChangeTitle:")
     this.setState({title: e.target.value})
@@ -104,8 +110,7 @@ console.log(this.state )
   }  
   render() {
     return (
-      <div>
-          <Header />
+      <Layout>
           <div className="container">
             <hr className="mt-2 mb-2" />
             <h1>Tasks - Edit</h1>
@@ -142,7 +147,7 @@ console.log(this.state )
             <hr />
             ID : {this.props.id}
           </div>
-      </div>
+      </Layout>
     );
   };
 }

@@ -13,6 +13,9 @@ export default function(){
       <Link href="/tasks">
         <a>[ Tasks ]</a>
       </Link>    
+      <Link href="/login">
+        <a>[ Login ]</a>
+      </Link>    
     </div>
   );
 }

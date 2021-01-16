@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Header from '../Layout/AppHead';
+//import Header from '../Layout/AppHead';
 
 const IndexRow = props => (
   <li>

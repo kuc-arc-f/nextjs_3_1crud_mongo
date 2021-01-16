@@ -1,11 +1,19 @@
 import Link from 'next/link';
 import Router from 'next/router'
+import flash from 'next-flash';
 import React, {Component} from 'react';
+import cookies from 'next-cookies'
 
-import Header from '../Layout/AppHead';
+import Layout from '../../components/layout'
 import IndexRow from './IndexRow';
 //
 export default class extends Component {
+  static async getInitialProps(ctx) {
+//console.log(json)
+    return { 
+      user_id :cookies(ctx).user_id
+    }
+  }  
   constructor(props){
     super(props)
     this.state = {title: '', content: ''}
@@ -14,6 +22,11 @@ export default class extends Component {
 //console.log(props)
   }
   componentDidMount(){
+    console.log( "user_id=" ,this.props.user_id )
+    if(typeof this.props.user_id === 'undefined'){
+      flash.set({ messages_error: 'Error, Login require' })
+      Router.push('/login');
+    }
   }   
   handleChangeTitle(e){
     this.setState({title: e.target.value})
@@ -23,12 +36,7 @@ export default class extends Component {
   }   
   handleClick(){
     this.add_item()
-//    console.log(this.state)
-//    this.add_auth_check()
-//        console.log( this.state )
   } 
-  add_auth_check(){
-  }
   async add_item(){
     try {
       var item = {
@@ -55,8 +63,7 @@ export default class extends Component {
   } 
   render() {
     return (
-      <div>
-        <Header />
+      <Layout>
         <div className="container">
           <hr className="mt-2 mb-2" />
           <h1>Tasks - Create</h1>
@@ -84,7 +91,7 @@ export default class extends Component {
           </div>                
           <hr />
         </div>
-      </div>
+      </Layout>
     )    
   } 
 }

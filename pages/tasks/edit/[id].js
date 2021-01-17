@@ -14,21 +14,26 @@ export default class extends React.Component {
     this.state = {
       title: this.props.item.title, 
       content: this.props.item.content,
+      _token : this.props.csrf.token,
     }
-//console.log(this.props )
+console.log(this.props )
   }
   static async getInitialProps(ctx) {
     console.log("id=", ctx.query.id)
     var id = ctx.query.id
-    const res = await fetch('/api/tasks/show?id=' + id)
+    const res = await fetch(process.env.BASE_URL + '/api/tasks/show?id=' + id)
     const json = await res.json()
-  // console.log(json)
     var item = json.item    
+    var url = process.env.BASE_URL + '/api/token_get'
+    var tokenRes = await fetch(url)
+    var tokenJson = await tokenRes.json()    
+  // console.log(json)
 //console.log(item)
       return {
           id: id,
           item: item,
-          user_id :cookies(ctx).user_id
+          user_id :cookies(ctx).user_id,
+          csrf: tokenJson.csrf,
       };
   }
   componentDidMount(){
@@ -53,9 +58,10 @@ export default class extends React.Component {
         title: this.state.title,
         content: this.state.content,
         id: this.props.id,
+        _token: this.state._token
       }
 //console.log(item)
-        const res = await fetch('/api/tasks/delete', {
+        const res = await fetch(process.env.BASE_URL +'/api/tasks/delete', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', },
           body: JSON.stringify(item),
@@ -68,16 +74,6 @@ export default class extends React.Component {
     } catch (error) {
       console.error(error);
     }     
-    /*
-    var db= await LibStore.get_db()
-    var docRef = db.collection("tasks").doc(this.props.id)
-    docRef.delete().then(function() {
-        console.log("Document successfully deleted!")
-        Router.push('/tasks')
-    }).catch(function(error) {
-        console.error("Error removing document: ", error)
-    })    
-    */
   } 
   async handleClick(){
   console.log("#-handleClick")
@@ -90,9 +86,10 @@ export default class extends React.Component {
         title: this.state.title,
         content: this.state.content,
         id: this.props.id,
+        _token: this.state._token
       }
 //console.log(item)
-        const res = await fetch('/api/tasks/update', {
+        const res = await fetch(process.env.BASE_URL +'/api/tasks/update', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

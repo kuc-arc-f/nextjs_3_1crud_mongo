@@ -5,23 +5,27 @@ import React, {Component} from 'react';
 import cookies from 'next-cookies'
 
 import Layout from '../../components/layout'
-import IndexRow from './IndexRow';
 //
 export default class extends Component {
   static async getInitialProps(ctx) {
+    var url = process.env.BASE_URL + '/api/token_get'
+    const res = await fetch(url)
+    const json = await res.json()
 //console.log(json)
     return { 
-      user_id :cookies(ctx).user_id
+      user_id :cookies(ctx).user_id,
+      csrf: json.csrf,
     }
   }  
   constructor(props){
     super(props)
-    this.state = {title: '', content: ''}
+    this.state = {title: '', content: '', _token : ''}
     this.handleClick = this.handleClick.bind(this);
     this.database = null
 //console.log(props)
   }
   componentDidMount(){
+    this.setState({ _token: this.props.csrf.token });
     console.log( "user_id=" ,this.props.user_id )
     if(typeof this.props.user_id === 'undefined'){
       flash.set({ messages_error: 'Error, Login require' })
@@ -42,15 +46,14 @@ export default class extends Component {
       var item = {
         title: this.state.title,
         content: this.state.content,
+        _token: this.state._token
       }
 //console.log(item)
-        const res = await fetch('/api/tasks/new', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(item),
-        });
+      const res = await fetch(process.env.BASE_URL + '/api/tasks/new', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', },
+        body: JSON.stringify(item),
+      });
       if (res.status === 200) {
 //        console.log(res)
         Router.push('/tasks');
@@ -58,6 +61,7 @@ export default class extends Component {
         throw new Error(await res.text());
       }
     } catch (error) {
+      alert("Error, save item")
       console.error(error);
     }    
   } 

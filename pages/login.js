@@ -8,20 +8,27 @@ import flash from 'next-flash';
 //
 class Page extends React.Component {
   static async getInitialProps(ctx) {
+    var url = process.env.BASE_URL + '/api/token_get'
+    const res = await fetch(url)
+    const json = await res.json()    
     return {
       initialName: '',
-      flash: flash.get(ctx)|| {}
+      flash: flash.get(ctx)|| {},
+      csrf: json.csrf,
     }
   }
   constructor(props) {
     super(props);
     this.state = {
       mail: '',
-      password: ''
+      password: '',_token : ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-//console.log(this.props)
+// console.log(this.props)
+  }
+  componentDidMount(){
+    this.setState({ _token: this.props.csrf.token });
   }
   handleClick(){
     this.post_item()
@@ -31,12 +38,11 @@ class Page extends React.Component {
       var item = {
         mail: this.state.mail,
         password: this.state.password,
+        _token: this.state._token
       }
-      const res = await fetch('/api/users/auth_check', {
+      const res = await fetch(process.env.BASE_URL + '/api/users/auth_check', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify(item),
       });
       if (res.status === 200) {

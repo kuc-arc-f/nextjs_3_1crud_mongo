@@ -1,11 +1,17 @@
 var ObjectID = require('mongodb').ObjectID;
+var csrf = require('csrf');
+var tokens = new csrf();
+
 import LibMongo from "../../../libs/LibMongo"
 
 //
 export default async function (req, res){
   try{
-//console.log(req.body);
     var data = req.body
+// console.log(data);
+    if(tokens.verify(process.env.CSRF_SECRET, data._token) === false){
+      throw new Error('Invalid Token, csrf_check');
+    }  
     var id = data.id
     var item = {
       title: data.title ,  
@@ -17,7 +23,6 @@ export default async function (req, res){
       await collection.updateOne(where, { $set: item })
 //console.log(id);
     var ret ={
-//      p1: "param222",
       item: item
     }
     res.json(ret);

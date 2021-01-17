@@ -7,7 +7,6 @@ import Layout from '../../components/layout'
 export default class extends Component {
   constructor(props){
     super(props)
-//    this.state = {title: '', content: ''}
     this.state = {
       name: '',
       mail: '',

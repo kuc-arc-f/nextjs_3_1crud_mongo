@@ -22,8 +22,7 @@ console.log(data.item )
 Page.getInitialProps = async (ctx) => {
   console.log(ctx.query.id)
   var id = ctx.query.id
-//  const res = await fetch('http://localhost:3000/api/tasks/show?id=' + id)
-  const res = await fetch('/api/tasks/show?id=' + id)
+  const res = await fetch(process.env.BASE_URL +'/api/tasks/show?id=' + id)
   const json = await res.json()
 // console.log(json)
   var item = json.item

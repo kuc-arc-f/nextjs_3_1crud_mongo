@@ -1,10 +1,12 @@
 
-import Layout from '../components/layout'
 import React from 'react'
 import Link from 'next/link';
 import Router from 'next/router'
 import cookies from 'next-cookies'
 import flash from 'next-flash';
+
+import Layout from '../components/layout'
+import LibCookie from '../libs/LibCookie'
 //
 class Page extends React.Component {
   static async getInitialProps(ctx) {
@@ -50,7 +52,7 @@ class Page extends React.Component {
         console.log(json )
         if(parseInt(json.ret) === 1){
           console.log("OK, post_item")
-          document.cookie = `user_id=${json.user._id}; path=/`;
+          LibCookie.set_cookie("user_id", json.user._id) 
           alert("Success, Login")          
           Router.push('/');
         }else{

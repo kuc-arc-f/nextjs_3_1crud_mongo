@@ -1,10 +1,21 @@
 import Link from 'next/link';
 import Router from 'next/router'
 import React, {Component} from 'react';
+import cookies from 'next-cookies'
 
 import Layout from '../../components/layout'
 //
 export default class extends Component {
+  static async getInitialProps(ctx) {
+    var url = process.env.BASE_URL + '/api/token_get'
+    const res = await fetch(url)
+    const json = await res.json()
+//console.log(json)
+    return { 
+      user_id :cookies(ctx).user_id,
+      csrf: json.csrf,
+    }
+  }  
   constructor(props){
     super(props)
     this.state = {
@@ -15,9 +26,10 @@ export default class extends Component {
     this.handleChange = this.handleChange.bind(this);    
     this.handleClick = this.handleClick.bind(this);
     this.database = null
-//console.log(props)
+// console.log(props)
   }
   componentDidMount(){
+    this.setState({ _token: this.props.csrf.token });
   }   
   handleChangeTitle(e){
     this.setState({title: e.target.value})
@@ -33,7 +45,8 @@ export default class extends Component {
       var item = {
         mail: this.state.mail,
         password: this.state.password,
-        name: this.state.name
+        name: this.state.name,
+        _token: this.state._token
       }
 //console.log(item)
         const res = await fetch('/api/users/new', {
@@ -44,8 +57,8 @@ export default class extends Component {
       if (res.status === 200) {
         var json = await res.json()
 console.log( json )
-//        console.log(res)
-//        Router.push('/');
+        alert("Success, User add")
+        Router.push('/');
       } else {
         throw new Error(await res.text());
       }

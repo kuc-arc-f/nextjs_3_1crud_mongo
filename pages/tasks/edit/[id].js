@@ -1,4 +1,5 @@
-import Head from 'next/head'
+//import Head from 'next/head'
+import Link from 'next/link';
 import Router from 'next/router'
 import React from 'react'
 import flash from 'next-flash';
@@ -109,6 +110,8 @@ console.log(this.props )
     return (
       <Layout>
           <div className="container">
+            <Link href="/tasks">
+              <a className="btn btn-outline-primary mt-2">Back</a></Link>
             <hr className="mt-2 mb-2" />
             <h1>Tasks - Edit</h1>
             <div className="row">

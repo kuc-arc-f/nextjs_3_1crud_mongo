@@ -3,12 +3,12 @@ import cookies from 'next-cookies'
 
 import Layout from '../components/layout'
 import LoginBox from '../components/LoginBox'
-//import LibCommon from '../libs/LibCommon'
 //
 function Home(data) {
   console.log( "user_id=", data.user_id )
     return (
     <Layout>
+      <hr />
       <LoginBox user_id={data.user_id} />
       <div className="container">
         <h1>Home</h1>

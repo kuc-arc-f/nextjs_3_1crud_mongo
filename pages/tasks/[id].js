@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import React from 'react'
+import Link from 'next/link';
 
 import Layout from '../../components/layout'
 //
@@ -10,7 +11,10 @@ console.log(data.item )
   return (
   <Layout>
     <div className="container">
-      <div><h1>{item.title}</h1>
+      <Link href="/tasks">
+        <a className="btn btn-outline-primary mt-2">Back</a></Link>
+      <hr />
+      <div><h1>Title : {item.title}</h1>
       </div>
       <div>Content: {item.content}
       </div>      

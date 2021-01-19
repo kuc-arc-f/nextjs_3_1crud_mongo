@@ -17,22 +17,31 @@ console.log(this.props)
     }
   }
   render() {
-//    console.log( "user_id=" ,this.props.user_id )
     const items = this.props.items
+console.log(items)
     return (
     <Layout>
       <div className="container">
         <Link href="/tasks/create">
           <a className="btn btn-primary mt-2">New</a>
-        </Link>          
-        <h1>Tasks</h1>
-        <ul>
-        {items.map((item, index) => {
-          return (<IndexRow key={index}
-                  id={item._id} title={item.title} />       
-          )
-        })}      
-        </ul>
+        </Link>  
+        <hr className="mt-2 mb-2" />        
+        <h3>Tasks - index</h3>
+        <table className="table table-hover">
+          <thead>
+          <tr>
+              <th>Title</th>
+              <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          {items.map((item, index) => {
+            return (<IndexRow key={index}
+                  id={item._id} title={item.title} date={item.created_at} />       
+            )
+          })}
+          </tbody>
+        </table>
       </div>
     </Layout>
     )

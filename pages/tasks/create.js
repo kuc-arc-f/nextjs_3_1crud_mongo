@@ -69,6 +69,8 @@ export default class extends Component {
     return (
       <Layout>
         <div className="container">
+          <Link href="/tasks">
+            <a className="btn btn-outline-primary mt-2">Back</a></Link>
           <hr className="mt-2 mb-2" />
           <h1>Tasks - Create</h1>
           <div className="row">

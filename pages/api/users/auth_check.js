@@ -15,9 +15,8 @@ export default async (req, res) => {
       if(tokens.verify(process.env.CSRF_SECRET, data._token) === false){
         throw new Error('Invalid Token, csrf_check');
       }  
-      const collection = await LibMongo.get_collection("users" )
       var where = { mail: data.mail }
-      var item = await collection.findOne(where)  
+      var item = await LibMongo.get_item("users" , where )
 //console.log(item)
       if(item == null){ return res.json(retArr); }
       if (data.mail === item.mail

@@ -4,8 +4,7 @@ import LibMongo from "../../../libs/LibMongo"
 //
 export default async function (req, res){
   try{
-    var collection = await LibMongo.get_collection("tasks" )
-    var items = await collection.find({}).sort({created_at: -1}).toArray()
+    var items = await LibMongo.get_array("tasks" )
     var ret ={
       items: items
     }

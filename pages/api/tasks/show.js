@@ -6,9 +6,8 @@ export default async function (req, res){
   try{
 //    console.log("id=", req.query.id);
     var id = req.query.id
-    const collection = await LibMongo.get_collection("tasks" )
     var where = { _id: new ObjectID(id) }
-    var item = await collection.findOne(where)            
+    var item = await LibMongo.get_item("tasks" , where ) 
     var ret ={
       item: item
     }

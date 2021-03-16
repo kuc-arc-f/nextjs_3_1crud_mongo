@@ -21,7 +21,6 @@ export default {
     try{
       var secret = tokens.secretSync();
       var token = tokens.create(secret);
-      const collection = await LibMongo.get_collection("sessions" )
       var item = {
           value:{
             secret: secret,
@@ -30,7 +29,9 @@ export default {
           user_id: user_id,
           created_at: new Date(),
       }
-      var doc = await collection.insertOne(item);           
+//      const collection = await LibMongo.get_collection("sessions" )
+//      var doc = await collection.insertOne(item); 
+      const doc = await LibMongo.add_item("sessions" ,item )          
       var ret ={
         id: doc.insertedId.toString(),
         token: token,

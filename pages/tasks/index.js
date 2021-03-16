@@ -6,7 +6,7 @@ import cookies from 'next-cookies'
 export default class Page extends React.Component {
   constructor(props){
     super(props)
-console.log(this.props)
+//console.log(this.props)
   }  
   static async getInitialProps(ctx) {
     const res = await fetch(process.env.BASE_URL+ '/api/tasks/list')
@@ -18,7 +18,7 @@ console.log(this.props)
   }
   render() {
     const items = this.props.items
-console.log(items)
+//console.log(items)
     return (
     <Layout>
       <div className="container">

@@ -18,10 +18,8 @@ export default async function (req, res){
       content: data.content ,
     };
 //console.log(item);
-      const collection = await LibMongo.get_collection("tasks" )
-      var where = {"_id": new ObjectID( id )};
-      await collection.updateOne(where, { $set: item })
-//console.log(id);
+    var where = {"_id": new ObjectID( id )};
+    await LibMongo.update_item("tasks" , where, item )
     var ret ={
       item: item
     }

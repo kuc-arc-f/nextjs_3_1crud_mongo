@@ -1,12 +1,12 @@
 ﻿# nextjs_3_1crud_mongo
 
- Version: 0.9.2
+ Version: 0.9.3
 
  Author  : Kouji Nakashima / kuc-arc-f.com
 
  date    : 2021/01/08
 
- update  : 2021/01/19 
+ update  : 2021/03/16 
 
 ***
 ### Summary

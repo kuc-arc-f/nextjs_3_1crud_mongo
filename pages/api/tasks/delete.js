@@ -7,9 +7,8 @@ export default async function (req, res){
 //console.log(req.body);
     var data = req.body
     var id = data.id
-    const collection = await LibMongo.get_collection("tasks" )
     var where = { "_id": new ObjectID( id ) };
-    await collection.deleteOne(where)    
+    await LibMongo.delete_item("tasks" , where )
     var ret ={
       id: id
     }

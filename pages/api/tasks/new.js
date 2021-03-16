@@ -19,11 +19,9 @@ export default async function (req, res){
       content: data.content ,
       created_at: new Date(),
     };
-    const collection = await LibMongo.get_collection("tasks" )
-    await collection.insertOne(item); 
+    const itemOne = await LibMongo.add_item("tasks" ,item )
     var ret ={
-      p1: "param222",
-      item: item
+      item: itemOne
     }
     res.json(ret);
   } catch (err) {

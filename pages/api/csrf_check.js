@@ -26,19 +26,3 @@ export default async (req, res) => {
     res.status(500).send();    
   }  
 }
-/*
-function valid_old(){
-  if(typeof req.headers.cookie != 'undefined'){
-    var parsed_cookie = cookie.parse(req.headers.cookie);
-    console.log("sid:", parsed_cookie.session_id )
-    var id = parsed_cookie.session_id
-    const collection = await LibMongo.get_collection("sessions" )
-    var where = { _id: new ObjectID(id) }
-    var item = await collection.findOne(where)
-    if(item != null){
-      console.log("secret:",item.value.secret)
-      await collection.deleteOne(where)
-    }
-  }
-}
-*/

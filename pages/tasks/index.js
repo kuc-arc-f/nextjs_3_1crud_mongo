@@ -3,23 +3,9 @@ import Layout from '../../components/layout'
 import IndexRow from './IndexRow';
 import cookies from 'next-cookies'
 //
-export default class Page extends React.Component {
-  constructor(props){
-    super(props)
-//console.log(this.props)
-  }  
-  static async getInitialProps(ctx) {
-    const res = await fetch(process.env.BASE_URL+ '/api/tasks/list')
-    const json = await res.json()
-//console.log(json)
-    return { 
-      items: json.items ,user_id :cookies(ctx).user_id
-    }
-  }
-  render() {
-    const items = this.props.items
-//console.log(items)
-    return (
+function Index(props) {
+  const items = props.items
+  return (
     <Layout>
       <div className="container">
         <Link href="/tasks/create">
@@ -45,5 +31,17 @@ export default class Page extends React.Component {
       </div>
     </Layout>
     )
+}
+
+export const getServerSideProps = async (ctx) => {
+  //  console.log("uid=", cookies(ctx).user_id)
+  const res = await fetch(process.env.BASE_URL+ '/api/tasks/list')
+  const json = await res.json()
+  var user_id = cookies(ctx).user_id || ''
+  var items = json.items
+  return {
+    props: { items, user_id } 
   }
 }
+
+export default Index

@@ -4,10 +4,9 @@ import Link from 'next/link';
 
 import Layout from '../../components/layout'
 //
-function Page(data) {
-console.log(data.item )
-  var item = data.item
-
+function Page(props) {
+  var item = props.item
+console.log(item)
   return (
   <Layout>
     <div className="container">
@@ -22,15 +21,15 @@ console.log(data.item )
   </Layout>
   )
 }
-//
-Page.getInitialProps = async (ctx) => {
-  console.log(ctx.query.id)
+
+export const getServerSideProps = async (ctx) => {
   var id = ctx.query.id
   const res = await fetch(process.env.BASE_URL +'/api/tasks/show?id=' + id)
   const json = await res.json()
-// console.log(json)
   var item = json.item
-  return { stars: "s1" , item:item }
+  return {
+    props: { item },
+  }
 }
 
 export default Page

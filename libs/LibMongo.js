@@ -16,6 +16,10 @@ export default {
       console.log(err);
       throw new Error('Error, get_client');
     }
+  },
+  get_db_name: function(){
+    this.init()
+    return this.dbName
   },   
   get_array: async function(collectionName ){
     try{

@@ -14,7 +14,7 @@ export default function Navibar(){
           <Link href="/" className="nav-link"> [ Home ] </Link>                    
         </li>
         <li className="nav-item active">
-          <Link href="/tasks" className="nav-link"> [ Tasks ] </Link>                    
+          <Link href="/posts" className="nav-link"> [ posts ] </Link>                    
         </li>
       </ul>
       <ul className="navbar-nav">
